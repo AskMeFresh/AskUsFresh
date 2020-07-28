@@ -19,7 +19,7 @@ import { RegisterComponent } from './Register/Register.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    RegisterComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
