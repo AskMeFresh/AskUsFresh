@@ -16,17 +16,22 @@ namespace AskUsFresh.Controllers
     [Route("[controller]")]
     public class RegisterController : ControllerBase
     {
-        private IRegisterService registerService { get; set; }
-        public RegisterController() 
+        private IRegisterService _registerService { get; set; }
+        public RegisterController(IRegisterService registerService) 
         {
-            this.registerService = new RegisterService();
+            this._registerService = registerService;
         }
 
         [HttpPost]
         public void Post(User user) 
         {
 
-            this.registerService.RegisterUser(user);
+            this._registerService.RegisterUser(user);
+        
+        }
+
+        public void Get(string userId)
+        { 
         
         }
     }

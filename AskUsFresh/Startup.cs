@@ -1,3 +1,4 @@
+using AskUsFresh.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,11 +6,22 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using AskUsFresh.Service.Interfaces;
+using Serilog;
+using System.IO;
+using System;
+using Microsoft.Extensions.Logging;
 
 namespace AskUsFresh
 {
     public class Startup
     {
+        public static IConfiguration configuration { get; } = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                   .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                   .Build();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -20,7 +32,19 @@ namespace AskUsFresh
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Log.Logger = new LoggerConfiguration().ReadFrom.
+                Configuration(configuration)
+               .CreateLogger();
+
+            AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
+            services.AddSingleton(Log.Logger);
+            services.AddDbContextPool<AskUsFreshDBContext>(options => 
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("AskUsFreshDb"));
+            });
             services.AddControllersWithViews();
+            
+            services.AddScoped<IRegisterService, RegisterService>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -48,7 +72,7 @@ namespace AskUsFresh
             {
                 app.UseSpaStaticFiles();
             }
-
+            app.UseSerilogRequestLogging();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

@@ -10,9 +10,9 @@ namespace AskUsFresh.Service
     public class RegisterService : IRegisterService
     {
         private AskUsFreshDBContext db { get; set; }
-        public RegisterService()
+        public RegisterService(AskUsFreshDBContext db)
         {
-            this.db = new AskUsFreshDBContext();
+            this.db = db;
         }
         public void RegisterUser(User user) 
         {
