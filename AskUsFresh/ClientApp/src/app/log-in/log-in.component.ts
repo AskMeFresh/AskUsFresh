@@ -15,17 +15,10 @@ export class LogInComponent implements OnInit {
   }
   createForm() {
     this.angForm = this.fb.group({
-      Email: ['', Validators.required],
+      Email: ['', [Validators.required,Validators.email] ],
       Password: ['', Validators.required]
     });
   }
-
-  //createForm2() {
-  //  this.angForm = this.fb.group({
-  //    Password: ['', Validators.required]
-  //  });
-  //}
-
   ngOnInit() {
   }
 

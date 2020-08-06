@@ -3,7 +3,7 @@
   <h1>
     Welcome Back !! {{title}}
   </h1>
-  <form [formGroup]="angForm" novalidate>
+  <form [formGroup]="angForm">
     <div class="form-group">
       <label class="center-block">
         Email: &nbsp;
@@ -13,9 +13,9 @@
       </label>
     </div>
     <div *ngIf="angForm.controls['Email'].invalid && (angForm.controls['Email'].dirty || angForm.controls['Email'].touched)" class="alert alert-danger">
-      <div *ngIf="angForm.controls['Email'].errors.required">
+      <!--<div *ngIf="angForm.controls['Email'].errors.required">-->
         Email is required.
-      </div>
+      <!--</div>-->
     </div>
     <div class="form-group">
       <label class="center-block">
