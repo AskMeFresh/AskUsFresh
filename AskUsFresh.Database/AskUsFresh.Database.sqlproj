@@ -61,5 +61,9 @@
   <ItemGroup>
     <Build Include="Log.sql" />
     <Build Include="Address.sql" />
+    <Build Include="Users.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="AskUsFresh.Database.refactorlog" />
   </ItemGroup>
 </Project>
