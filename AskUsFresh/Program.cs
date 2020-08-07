@@ -23,11 +23,11 @@ namespace AskUsFresh
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
 
-            Host.CreateDefaultBuilder(args)
-            .UseSerilog()
+            Host.CreateDefaultBuilder(args)            
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseStartup<Startup>();                
+                webBuilder.UseStartup<Startup>()
+                .UseSerilog();                
             });
     }
 }
