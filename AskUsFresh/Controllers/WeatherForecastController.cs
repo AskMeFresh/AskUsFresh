@@ -15,7 +15,11 @@ namespace AskUsFresh.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-
+        public static IConfiguration configuration { get; } = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+           .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+           .Build();
         public IConfiguration Configuration { get; }
 
         private static readonly string[] Summaries = new[]
@@ -39,6 +43,13 @@ namespace AskUsFresh.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            Log.Logger = new LoggerConfiguration().ReadFrom.
+           Configuration(configuration)
+       .CreateLogger();
+
+            Log.Warning("Testing the warning with new log");
+            Log.CloseAndFlush();
+
 
             for (int i = 0; i < 10; i++)
             {
