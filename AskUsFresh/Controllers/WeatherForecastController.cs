@@ -43,12 +43,12 @@ namespace AskUsFresh.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            Log.Logger = new LoggerConfiguration().ReadFrom.
-           Configuration(configuration)
-       .CreateLogger();
+           // Log.Logger = new LoggerConfiguration().ReadFrom.
+           //Configuration(configuration)
+           //.CreateLogger();
 
-            Log.Warning("Testing the warning with new log");
-            Log.CloseAndFlush();
+           // Log.Warning("Testing the warning with new log");
+           // Log.CloseAndFlush();
 
 
             for (int i = 0; i < 10; i++)

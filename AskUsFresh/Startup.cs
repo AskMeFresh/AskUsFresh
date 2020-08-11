@@ -12,6 +12,7 @@ using Serilog;
 using System.IO;
 using System;
 using Microsoft.Extensions.Logging;
+using Serilog.Sinks.MSSqlServer.Sinks.MSSqlServer.Options;
 
 namespace AskUsFresh
 {
@@ -32,9 +33,16 @@ namespace AskUsFresh
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            Log.Logger = new LoggerConfiguration().ReadFrom.
-                Configuration(configuration)
-               .CreateLogger();
+            //Log.Logger = new LoggerConfiguration().ReadFrom.
+            //    Configuration(configuration)
+            //   .CreateLogger();
+
+            Log.Logger = new LoggerConfiguration()
+            .WriteTo
+            .MSSqlServer(
+            connectionString: "Database=AskMeFresh;User ID=SSakinala;Password=test@1234;Server=askmefreshserver.database.windows.net",
+            sinkOptions: new SinkOptions { TableName = "Log" })
+            .CreateLogger();
 
             AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
             services.AddSingleton(Log.Logger);
