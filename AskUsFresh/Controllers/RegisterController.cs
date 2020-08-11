@@ -23,7 +23,7 @@ namespace AskUsFresh.Controllers
         }
 
         [HttpPost]
-        public void Post(User user) 
+        public void Post(Users user) 
         {
 
             this._registerService.RegisterUser(user);

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AskUsFresh.Domain;
+using AskUsFresh.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -34,26 +36,29 @@ namespace AskUsFresh.Controllers
 
         private readonly ILogger<WeatherForecast> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecast> logger, IConfiguration configuration)
+        private IRegisterService _registerService { get; set; }
+        public WeatherForecastController(ILogger<WeatherForecast> logger, IConfiguration configuration, IRegisterService registerService)
         {
             this._logger = logger;
             this.Configuration = configuration;
+            this._registerService = registerService;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-           // Log.Logger = new LoggerConfiguration().ReadFrom.
-           //Configuration(configuration)
-           //.CreateLogger();
+            // Log.Logger = new LoggerConfiguration().ReadFrom.
+            //Configuration(configuration)
+            //.CreateLogger();
 
-           // Log.Warning("Testing the warning with new log");
-           // Log.CloseAndFlush();
+            // Log.Warning("Testing the warning with new log");
+            // Log.CloseAndFlush();
 
+            var user = TestMethod(10);           
 
             for (int i = 0; i < 10; i++)
             {
-                Summaries1[i] = this.Configuration.GetSection("TestString").Value;
+                Summaries1[i] = user.FirstName;  //this.Configuration.GetSection("TestString").Value;
             }
 
             this._logger.LogWarning("Test Warning");
@@ -67,5 +72,11 @@ namespace AskUsFresh.Controllers
             .ToArray();
         }
 
+
+        public Users TestMethod(int mobileNumber)
+        {
+           return this._registerService.GetUserByMobileNumber(mobileNumber);
+        
+        }
     }
 }

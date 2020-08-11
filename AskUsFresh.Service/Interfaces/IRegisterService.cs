@@ -7,9 +7,13 @@ namespace AskUsFresh.Service.Interfaces
 {
    public interface IRegisterService
     {
-        public void RegisterUser(User user);
+        public void RegisterUser(Users user);
 
-        public User GetUserByEmailandMobileNumber(string email,string mobileNumber);
+        public Users GetUserByEmailandMobileNumber(string email, int mobileNumber);
+
+        public Users GetUserByEmail(string email);
+
+        public Users GetUserByMobileNumber(int mobileNumber);
 
         public int Commit();
     }

@@ -14,20 +14,31 @@ namespace AskUsFresh.Service
         {
             this.db = db;
         }
-        public void RegisterUser(User user) 
+        public void RegisterUser(Users user) 
         {
-            var userExists = this.GetUserByEmailandMobileNumber(user.EmailAddress, user.PhoneNumber);
+            var userExists = this.GetUserByEmailandMobileNumber(user.Email, user.PhoneNumber);
             if(userExists != null)
             {
                 this.db.Add(user);
             }
         }
 
-        public User GetUserByEmailandMobileNumber(string email, string mobileNumber)
+        public Users GetUserByEmailandMobileNumber(string email, int mobileNumber)
         {
 
-            return this.db.User.Where(u => u.EmailAddress == email || 
+            return this.db.Users.Where(u => u.Email == email || 
             u.PhoneNumber == mobileNumber).SingleOrDefault();
+        }
+
+        public Users GetUserByEmail(string email)
+        {
+            return this.db.Users.Where(u => u.Email == email).SingleOrDefault();
+        }
+
+
+        public Users GetUserByMobileNumber(int mobileNumber)
+        {
+            return this.db.Users.Where(u => u.PhoneNumber == mobileNumber).SingleOrDefault();
         }
 
         public int Commit()
