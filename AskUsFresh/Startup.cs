@@ -37,13 +37,6 @@ namespace AskUsFresh
                 Configuration(configuration)
                .CreateLogger();
 
-            //Log.Logger = new LoggerConfiguration()
-            //.WriteTo
-            //.MSSqlServer(
-            //connectionString: "Database=AskMeFresh;User ID=SSakinala;Password=test@1234;Server=askmefreshserver.database.windows.net",
-            //sinkOptions: new SinkOptions { TableName = "Log" })
-            //.CreateLogger();
-
             AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
             services.AddSingleton(Log.Logger);
             services.AddDbContextPool<AskUsFreshDBContext>(options => 
