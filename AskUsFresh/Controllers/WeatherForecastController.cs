@@ -47,36 +47,16 @@ namespace AskUsFresh.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            // Log.Logger = new LoggerConfiguration().ReadFrom.
-            //Configuration(configuration)
-            //.CreateLogger();
-
-            // Log.Warning("Testing the warning with new log");
-            // Log.CloseAndFlush();
-
-            var user = TestMethod(10);           
-
-            for (int i = 0; i < 10; i++)
-            {
-                Summaries1[i] = user.FirstName;  //this.Configuration.GetSection("TestString").Value;
-            }
-
+                               
             this._logger.LogWarning("Test Warning");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries1[rng.Next(Summaries1.Length)]
+                Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-        }
-
-
-        public Users TestMethod(int mobileNumber)
-        {
-           return this._registerService.GetUserByMobileNumber(mobileNumber);
-        
         }
     }
 }
