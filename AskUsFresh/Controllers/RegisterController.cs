@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AskUsFresh.Domain;
+using AskUsFresh.Domain.DTO;
 using AskUsFresh.Service;
 using AskUsFresh.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,14 @@ namespace AskUsFresh.Controllers
     [Route("[controller]")]
     public class RegisterController : ControllerBase
     {
-        private IRegisterService _registerService { get; set; }
-        public RegisterController(IRegisterService registerService) 
+        private IUserApplicationService _registerService { get; set; }
+        public RegisterController(IUserApplicationService registerService) 
         {
             this._registerService = registerService;
         }
 
         [HttpPost]
-        public void Post(Users user) 
+        public void Post(UserForCreationDTO user) 
         {
 
             this._registerService.RegisterUser(user);

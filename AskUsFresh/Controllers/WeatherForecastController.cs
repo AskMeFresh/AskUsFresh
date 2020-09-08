@@ -31,8 +31,8 @@ namespace AskUsFresh.Controllers
 
         private readonly ILogger<WeatherForecast> _logger;
 
-        private IRegisterService _registerService { get; set; }
-        public WeatherForecastController(ILogger<WeatherForecast> logger, IConfiguration configuration, IRegisterService registerService)
+        private IUserApplicationService _registerService { get; set; }
+        public WeatherForecastController(ILogger<WeatherForecast> logger, IConfiguration configuration, IUserApplicationService registerService)
         {
             this._logger = logger;
             this.Configuration = configuration;
