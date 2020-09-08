@@ -13,6 +13,10 @@ using System.IO;
 using System;
 using Microsoft.Extensions.Logging;
 using Serilog.Sinks.MSSqlServer.Sinks.MSSqlServer.Options;
+using AskUsFresh.Domain;
+using AskUsFresh.Service.ApplicationService;
+using AskUsFresh.Domain.Interface;
+using AskUsFresh.Domain.Service;
 
 namespace AskUsFresh
 {
@@ -45,7 +49,10 @@ namespace AskUsFresh
             });
             services.AddControllersWithViews();
             
-            services.AddScoped<IRegisterService, RegisterService>();
+            services.AddScoped<IUserApplicationService, UserApplicationService>();
+            services.AddScoped<IAddressApplicationService, AddressApplicationService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAddressService, AddressService>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
